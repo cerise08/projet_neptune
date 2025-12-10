@@ -1,3 +1,9 @@
+<?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+    <li class="nav-item">
+        <a class="nav-link" href="listeutilisateurs.php">Liste des utilisateurs</a>
+    </li>
+<?php endif; ?>
+
 <!doctype html>
 <html lang="en">
   <head>

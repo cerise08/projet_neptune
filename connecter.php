@@ -1,3 +1,24 @@
+<?php
+session_start();
+
+// Exemple après vérification du login :
+if ($user && password_verify($password, $user['motdepasse'])) {
+
+    // Stocker les infos en session
+    $_SESSION['id'] = $user['id'];
+    $_SESSION['role'] = $user['role'];
+
+    // Redirection selon le rôle
+    if ($_SESSION['role'] === 'admin') {
+        header("Location: admin.php");
+        exit;
+    } else {
+        header("Location: home.php");
+        exit;
+    }
+}
+?>
+
 <div class="registration-card">
   <div class="registration-left" aria-hidden="true"></div>
   <div class="registration-right">
