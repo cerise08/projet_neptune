@@ -24,15 +24,23 @@ if (!$user || !password_verify($password, $user['password'])) {
     exit;
 }
 
-// Connexion réussie
+// Connexion réussie : on stocke les infos en session
 $_SESSION['user'] = [
     'id' => $user['id'],
     'nom' => $user['nom'],
     'prenom' => $user['prenom'],
-    'email' => $user['email']
+    'email' => $user['email'],
+    'role' => $user['role']
 ];
 
-$_SESSION['message'] = "Connexion réussie !";
-$_SESSION['type_message'] = "success";
-header("Location: index.php");
+// Redirection selon rôle
+if ($user['role'] === 'admin') {
+    $_SESSION['message'] = "Connexion réussie ! Bienvenue administrateur.";
+    $_SESSION['type_message'] = "success";
+    header("Location: admin.php");
+} else {
+    $_SESSION['message'] = "Connexion réussie !";
+    $_SESSION['type_message'] = "success";
+    header("Location: index.php"); // ou home.php
+}
 exit;

@@ -1,21 +1,6 @@
 <?php
-session_start();
-
-// Exemple après vérification du login :
-if ($user && password_verify($password, $user['motdepasse'])) {
-
-    // Stocker les infos en session
-    $_SESSION['id'] = $user['id'];
-    $_SESSION['role'] = $user['role'];
-
-    // Redirection selon le rôle
-    if ($_SESSION['role'] === 'admin') {
-        header("Location: admin.php");
-        exit;
-    } else {
-        header("Location: home.php");
-        exit;
-    }
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 ?>
 
@@ -27,6 +12,14 @@ if ($user && password_verify($password, $user['motdepasse'])) {
             <div class="registration-sub small-note">Connectez-vous pour gérer vos réservations et profiter d'avantages.</div>
         </div>
 
+        <!-- Affichage du message flash si présent -->
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert alert-<?= $_SESSION['type_message'] ?? 'info' ?>">
+                <?= htmlspecialchars($_SESSION['message']) ?>
+            </div>
+            <?php unset($_SESSION['message'], $_SESSION['type_message']); ?>
+        <?php endif; ?>
+
         <form action="confirmer_connexion.php" method="post" novalidate>
             <div class="row g-3">
                 <div class="col-12">
@@ -36,12 +29,6 @@ if ($user && password_verify($password, $user['motdepasse'])) {
                 <div class="col-12">
                     <label for="password" class="form-label">Mot de passe</label>
                     <input type="password" id="password" name="password" class="form-control" required>
-                </div>
-                <div class="col-12">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" id="remember" name="remember">
-                        <label class="form-check-label" for="remember">Se souvenir de moi</label>
-                    </div>
                 </div>
                 <div class="col-12 d-flex justify-content-between align-items-center mt-2">
                     <a href="index.php?page=inscription" class="small-note">Pas encore de compte ? Inscrivez-vous</a>

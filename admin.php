@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "config.php"; // connexion BDD
+require_once __DIR__ . '/db/config.php'; // exemple si config.php est dans le dossier db
 
 // Vérification : l'utilisateur est connecté
 if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
