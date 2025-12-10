@@ -1,8 +1,5 @@
 <?php
 $type = isset($_GET['type']) ? $_GET['type'] : 'standard';
-    $offerLabel = '';
-    $extraPerPersonPerNight = 0;
-    $flatExtra = 0;
 
 switch($type) {
     case 'deluxe':
@@ -16,7 +13,7 @@ switch($type) {
     default:
         $nom = "Chambre Standard";
         $basePrice = 80;
-    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,15 +22,25 @@ switch($type) {
     <title>Réservation</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .form-check .option-price { display: none; margin-left: 8px; color: var(--gold, #d6a65f); font-weight: 600; }
-        .form-check input[type="checkbox"]:checked + label + .option-price { display: inline-block; }
-        .note-server { font-size: .95rem; color: #bbb; }
+        .form-check .option-price { 
+            display: none; 
+            margin-left: 8px; 
+            color: var(--gold, #d6a65f); 
+            font-weight: 600; 
+        }
+        .form-check input[type="checkbox"]:checked + label + .option-price { 
+            display: inline-block; 
+        }
+        .note-server { 
+            font-size: .95rem; 
+            color: #bbb; 
+        }
     </style>
 </head>
 <body>
 
 <div class="reservation-card">
-    <h2>Réserver : <?php echo $nom; ?><?php echo ''; ?></h2>
+    <h2>Réserver : <?php echo $nom; ?></h2>
     <p class="price">Prix de base : <?php echo $basePrice; ?>€ / nuit</p>
 
     <form action="confirmer_reservation.php" method="post">
@@ -47,6 +54,18 @@ switch($type) {
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+
+        <!-- 🔥 ajout date arrivee -->
+        <div class="mb-3">
+            <label for="date_debut" class="form-label">Date d’arrivée</label>
+            <input type="datetime-local" id="date_debut" name="date_debut" class="form-control" required>
+        </div>
+
+        <!-- 🔥 ajout date depart -->
+        <div class="mb-3">
+            <label for="date_fin" class="form-label">Date de départ</label>
+            <input type="datetime-local" id="date_fin" name="date_fin" class="form-control" required>
         </div>
 
         <div class="row g-3">
@@ -82,12 +101,12 @@ switch($type) {
         </div>
 
         <div class="mt-3">
-            <p class="small-note">Extras sélectionnés : <em class="note-server">les options cochées seront visibles ici ; le total final sera calculé à la confirmation côté serveur.</em></p>
+            <p class="small-note">Extras sélectionnés : <em class="note-server">affichage côté serveur dans la confirmation.</em></p>
         </div>
 
         <div class="mt-2">
             <label class="form-label">Total estimé</label>
-            <div id="total" class="form-control"><?php echo $basePrice; ?>€ <small class="note-server">(+ options sélectionnées ; total final calculé au serveur)</small></div>
+            <div id="total" class="form-control"><?php echo $basePrice; ?>€ <small class="note-server">(total final côté serveur)</small></div>
         </div>
 
         <div class="reservation-actions">
@@ -96,5 +115,6 @@ switch($type) {
         </div>
     </form>
 </div>
+
 </body>
 </html>
