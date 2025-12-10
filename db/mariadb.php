@@ -1,10 +1,8 @@
 <?php
-// essaye de faire le code qui est dans le bloc try
 try {
-    // se connecte à la base de données et stocke la connection dans $dbh
-    $dbh = new PDO('mysql:host=localhost;dbname=phpcours', 'login4441', 'WKNOONYSJfxbTQS');
+    $dbh = new PDO('mysql:host=localhost;dbname=projet-neptune', 'login4441', 'WKNOONYSJfxbTQS');
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    // comme la connexion n'a pas fonctionné, je stocke null dans $dbh
-    $dbh =  null;
+    die("Erreur de connexion : " . $e->getMessage());
 }
 ?>
